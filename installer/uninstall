@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cd build && sudo make uninstall && echo "bagels has been successfully uninstalled"
