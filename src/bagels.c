@@ -3,35 +3,33 @@
 
 #include "bagels.h"
 
-void bagels(){
+static const int DEFAULT_MAX_GUESSES = 10;
 
+static int has_duplicates(int *nums){
+  if(nums[0] == nums[1]){
+    nums[1] = rand() % 10;
+    return 1;
+  }else if(nums[1] == nums[2]){
+    nums[2] = rand() % 10;
+    return 1;
+  }else if(nums[2] == nums[0]){
+    nums[0] = rand() % 10;
+    return 1;
+  }else{
+    return 0;
+  }
 }
 
+static void set_num(int *nums){
+  int i;
+  for(i = 0; i < 3; i++){
+    nums[i] = rand() % 10;
+  }
+  while(has_duplicates(nums));
+}
+
+static void guess(player *p, int *nums){
 /*
-import random
-
-INTRO = "Welcome to bagels. I have a 3-digit number in mind. Think you can guess?"
-
-def has_duplicates(arr):
-  if arr[0] == arr[1]:
-    arr[1] = int(random.random()*10) % 10
-    return 1
-  elif arr[1] == arr[2]:
-    arr[2] = int(random.random()*10) % 10
-    return 1
-  elif arr[2] == arr[0]:
-    arr[0] = int(random.random()*10) % 10
-    return 1
-  else:
-    return 0
-
-def gen_num():
-  arr = []
-  for i in range(3): 
-    n = int(random.random()*10) % 10
-    arr.append(n)
-  return arr
-
 def guess(nums):
   global GAME_OVER
   inp = str(input("Enter your guess: "))
@@ -54,28 +52,30 @@ def guess(nums):
     GAME_OVER = 2
 
   print(echo_back)
+  */
+}
 
-def main():
-  global GAME_OVER
-  GAME_OVER = 0
-  nums = gen_num()
-  while has_duplicates(nums): 0
-  guesses = 10
-  print(INTRO)
-  while 1:
-    guess(nums)
-    guesses -= 1
-    if guesses == 0:
-      GAME_OVER = 1
+void bagels(player *p){
+  int nums[3] = {0,0,0};
+  int guesses = DEFAULT_MAX_GUESSES;
+  p->game_over = 0;
+  set_num(nums);
+  while(1){
+    guess(p, nums);
+    guesses --;
+    if(guesses == 0){
+      p->game_over = 1;
+    }
+    if(p->game_over == 1){
+      printf("Game Over!\nYou ran out of guesses.\n The numbers were %i,%i,%i\n", nums[0], nums[1], nums[2]);
+      p->losses += 1;
+      break;
+    }else if(p->game_over == 2){
+      printf("You Won!\n");
+      p->wins += 1;
+      break;
+    }
+  }
+  //Let main ask if play again via input.c
+}
 
-    if GAME_OVER == 1:
-      print("Game Over!\nYou ran out of guesses.\nThe number was %i%i%i" % (nums[0],nums[1],nums[2]))
-      break
-    elif GAME_OVER == 2:
-      print("You Won!")
-      break
-  if str(input("Play Again? [y/n] ")) == "y":
-    main()
-
-main()
-*/
