@@ -5,7 +5,7 @@
 static const version v = {
   1, // Major
   0, // Minor
-  1  // Patch
+  2  // Patch
 };
 
 void get_version(){
