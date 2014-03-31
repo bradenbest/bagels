@@ -3,8 +3,8 @@
 #include "version.h"
 
 static const version v = {
-  0, // Major
-  2, // Minor
+  1, // Major
+  0, // Minor
   0  // Patch
 };
 
