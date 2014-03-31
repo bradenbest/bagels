@@ -68,7 +68,8 @@ void bagels(player *p){
       printf("Game Over!\nYou ran out of guesses.\nThe numbers were %i,%i,%i\n", nums[0], nums[1], nums[2]);
       p->losses += 1;
       break;
-    }else if(p->game_over == 2){
+    }
+    if(p->game_over == 2){
       printf("You Won!\n");
       p->wins += 1;
       break;
